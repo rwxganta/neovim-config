@@ -1,5 +1,6 @@
 local keymap = vim.keymap.set
-local opts = { noremap = true, silent = true, expr = true }
+--local opts = { noremap = true, silent = true, expr = true }
+local opts = { noremap = true, silent = true }
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -92,8 +93,8 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 keymap("v", "p", '"_dP', opts)
 
 -- Remap for dealing with word wrap
-keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", opts)
-keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", opts)
+keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, silent = true, expr = true })
+keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, silent = true, expr = true })
 
 -- Stay in indent mode
 keymap("v", "<", "<gv^", opts)

@@ -1,4 +1,8 @@
--- Leader key
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true, expr = true }
+
+--Remap space as leader key
+keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -65,20 +69,38 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+
+-- Better window navigation
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
+
+-- Resize with arrows
+keymap("n", "<C-Up>", ":resize -2<CR>", opts)
+keymap("n", "<C-Down>", ":resize +2<CR>", opts)
+keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
+keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+
+-- Move text up and down
+keymap("n", "<A-j>", ":m .+1<CR>==", opts)
+keymap("n", "<A-k>", ":m .-2<CR>==", opts)
+
 -- move UP-DOWN highlighted text
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
+keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
+keymap("v", "p", '"_dP', opts)
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", opts)
+keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", opts)
 
--- Indent while remaining in visual mode.
-vim.keymap.set('v', '<', '<gv')
-vim.keymap.set('v', '>', '>gv')
+-- Stay in indent mode
+keymap("v", "<", "<gv^", opts)
+keymap("v", ">", ">gv^", opts)
 
 -- Trying to solve the :W problem .-.
-vim.keymap.set('c', 'W', ':w<CR>', { noremap = true, silent = true })
+vim.keymap.set('c', 'W', ':w<CR>', opts)
 
 
 -- LAZY
@@ -95,50 +117,5 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
--- Plugins
-
-local plugins = {
-	{
-		'catppuccin/nvim',
-		name = 'catppuccin',
-		lazy = false,
-		priority = 1000
-	},
-	{
-		'nvim-treesitter/nvim-treesitter',
-		build = ':TSUpdate'
-	},
-	{
-		'nvim-telescope/telescope.nvim',
-		tag = '0.1.5',
-		dependencies = { 'nvim-lua/plenary.nvim' }
-	},
-}
-
-local opts = {}
-require('lazy').setup(plugins, opts)
-
-
--- theme
-require('catppuccin').setup()
-vim.cmd.colorscheme 'catppuccin'
-
--- Treesitter
-require("nvim-treesitter.configs").setup({
-	ensure_installed = {"lua", "javascript"},
-	highlight = { enable = true },
-	indent = { enable = true },
-})
-
--- telescope
-local telescope = require("telescope.builtin")
-vim.keymap.set('n', '<C-p>', telescope.find_files, {})
-vim.keymap.set('n', '<leader>fg', telescope.live_grep, {})
-
-require("nvim-treesitter.configs").setup({
-  ensure_installed = {'lua', 'javascript', 'html', 'css'},
-  highlight = { enable = true },
-  indent = { enable = true },  
-})
+require('lazy').setup('plugins')
 

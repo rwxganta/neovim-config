@@ -14,6 +14,7 @@ vim.o.hlsearch = false
 vim.o.number = true
 vim.o.relativenumber = true
 vim.wo.cursorline = true
+vim.o.colorcolumn = '80'
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -54,18 +55,17 @@ vim.opt.splitright = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
--- vim.o.expandtab = true
+vim.o.expandtab = true
 
 -- keep cursor in the middle while scrolling
 vim.opt.scrolloff = 9999
 vim.o.virtualedit = 'block'
-
 vim.opt.list = true
 -- vim.opt.listchars = { space = '·', tab = '··' }
 vim.opt.listchars = {
     space = "⋅",
     eol = "↴",
-    tab = "▎_",
+    -- tab = "▎_",
     -- tab = "|_>",
     trail = "•",
     extends = "❯",

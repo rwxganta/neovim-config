@@ -19,21 +19,29 @@ return {
 		"neovim/nvim-lspconfig",
 
 		config = function()
+			local capabilities = require('cmp_nvim_lsp').default_capabilities()
 			local lspconfig = require('lspconfig')
+
 			lspconfig.lua_ls.setup({
 				settings = {
 					Lua = {
 						diagnostics = {
-							-- Get the language server to recognize the `vim` global
 							globals = { 'vim', 'require' },
 						}
 					}
 				}
 			}) -- END lua_ls
 
-			lspconfig.tsserver.setup({})
-			lspconfig.html.setup({})
-			lspconfig.cssls.setup({})
+			lspconfig.tsserver.setup({
+				capabilities = capabilities;
+			})
+			lspconfig.html.setup({
+				capabilities = capabilities;
+			})
+			lspconfig.cssls.setup({
+				capabilities = capabilities;
+			})
 		end -- END CONFIG
 	}
 }
+
